@@ -41,6 +41,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.alamin.compose.screen.QuotesDetails
 import com.alamin.compose.ui.theme.ComposeTheme
 
 class CheezyActivity : ComponentActivity() {
@@ -48,49 +49,10 @@ class CheezyActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeTheme {
-                PreviewGenerator()
+                QuotesDetails()
             }
         }
     }
 
-    @Preview()
-    @Composable
-    fun PreviewGenerator(modifier: Modifier = Modifier) {
-        var dataList by remember {
-            mutableStateOf(mutableListOf<Int>(1,2,3,5,6))
-        }
 
-        dataList.add(9)
-
-        LazyColumn(){
-            items(dataList){item ->
-                SayHello(index = item)
-            }
-        }
-    }
-
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun SayHello(index:Int) {
-
-        Card(modifier = Modifier.padding(8.dp), elevation = CardDefaults.cardElevation(4.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().padding(8.dp)) {
-
-                Spacer(modifier = Modifier.size(10.dp))
-                Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_background),
-                    modifier = Modifier
-                        .size(40.dp)
-                        .padding(4.dp),
-                    contentDescription = null
-                )
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(text = "Title No. $index", fontSize = 16.sp, fontWeight = FontWeight.Bold)
-                    Text(text = "Subtitle No. $index", fontSize = 12.sp)
-                }
-            }
-
-        }
-
-    }
 }
