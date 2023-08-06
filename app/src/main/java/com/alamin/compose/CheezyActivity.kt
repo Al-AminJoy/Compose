@@ -6,9 +6,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -42,17 +45,41 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alamin.compose.screen.QuotesDetails
+import com.alamin.compose.screen.QuotesListScreen
 import com.alamin.compose.ui.theme.ComposeTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class CheezyActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        CoroutineScope(IO).launch {
+            delay(1000)
+            DataManager.loadAssetData(applicationContext)
+        }
+
         setContent {
             ComposeTheme {
-                QuotesDetails()
+                App()
             }
         }
     }
 
+    @Composable
+    fun App() {
+        if (DataManager.isLoaded.value){
+            QuotesListScreen(data = DataManager.data) {
+                
+            }
+        }else{
+            Box(modifier = Modifier.fillMaxSize(1f),
+                contentAlignment = Alignment.Center) {
+                Text(text = "Loading...", textAlign = TextAlign.Center)
+            }
+        }
+    }
 
 }

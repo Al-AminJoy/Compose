@@ -2,6 +2,7 @@ package com.alamin.compose.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,15 +27,19 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.fontResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.alamin.compose.R
+import com.alamin.compose.model.Quote
 
-@Preview()
 @Composable
-fun QuotesListItem() {
-    Card(elevation = CardDefaults.cardElevation(4.dp), modifier = Modifier.padding(4.dp)) {
+fun QuotesListItem(quote: Quote,onClick : () -> Unit) {
+    Card(elevation = CardDefaults.cardElevation(4.dp), modifier = Modifier.padding(4.dp).clickable { onClick() }) {
 
         Row(modifier = Modifier.padding(4.dp)) {
 
@@ -55,7 +60,7 @@ fun QuotesListItem() {
             Column(modifier = Modifier.weight(1f)) {
 
                 Text(
-                    text = "Quotes Title",
+                    text = "${quote.text}",
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.Black
                 )
@@ -67,7 +72,7 @@ fun QuotesListItem() {
                         .background(Color.Black)
                 )
                 Text(
-                    text = "Author",
+                    text = "${quote.author}",
                     style = MaterialTheme.typography.bodySmall,
                     color = Color.DarkGray,
                     fontWeight = FontWeight.Thin
@@ -80,63 +85,3 @@ fun QuotesListItem() {
     }
 }
 
-@Preview
-@Composable
-fun QuotesDetails() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize(1f)
-            .background(Brush.linearGradient(colors = listOf(Color.LightGray, Color.Gray))),
-        contentAlignment = Alignment.Center
-    ) {
-        Card(
-            elevation = CardDefaults.cardElevation(4.dp), colors = CardDefaults.cardColors(Color.White), modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-
-        ) {
-            Column(
-                verticalArrangement = Arrangement.Center, modifier = Modifier
-                    .padding(4.dp)
-                    .fillMaxWidth()
-            ) {
-
-                Image(
-                    imageVector = Icons.Filled.FormatQuote,
-                    modifier = Modifier
-                        .rotate(180f)
-                        .padding(4.dp),
-                    contentDescription = null
-                )
-
-                Text(
-                    text = "Quotes",
-                    color = Color.Black,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Image(
-                    imageVector = Icons.Filled.FormatQuote,
-                    modifier = Modifier
-                        .align(alignment = Alignment.End)
-                        .padding(4.dp),
-                    contentDescription = null
-                )
-
-                Spacer(modifier = Modifier.size(4.dp))
-
-                Text(
-                    text = "Author",
-                    color = Color.DarkGray,
-                    modifier = Modifier
-                        .padding(end = 4.dp)
-                        .fillMaxWidth(),
-                    textAlign = TextAlign.End
-                )
-
-            }
-
-        }
-
-    }
-}
