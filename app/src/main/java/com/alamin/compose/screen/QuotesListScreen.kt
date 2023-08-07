@@ -17,7 +17,7 @@ import com.alamin.compose.R
 import com.alamin.compose.model.Quote
 
 @Composable
-fun QuotesListScreen(data: Array<Quote>, onClick: () -> Unit) {
+fun QuotesListScreen(data: Array<Quote>, onClick: (quote:Quote) -> Unit) {
 
     Column {
         Text(
@@ -28,7 +28,7 @@ fun QuotesListScreen(data: Array<Quote>, onClick: () -> Unit) {
         )
 
         QuotesList(quotes = data) {
-            onClick()
+            quote: Quote -> onClick(quote)
         }
 
     }

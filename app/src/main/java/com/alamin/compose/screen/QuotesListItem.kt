@@ -38,8 +38,8 @@ import com.alamin.compose.R
 import com.alamin.compose.model.Quote
 
 @Composable
-fun QuotesListItem(quote: Quote,onClick : () -> Unit) {
-    Card(elevation = CardDefaults.cardElevation(4.dp), modifier = Modifier.padding(4.dp).clickable { onClick() }) {
+fun QuotesListItem(quote: Quote,onClick : (quote: Quote) -> Unit) {
+    Card(elevation = CardDefaults.cardElevation(4.dp), modifier = Modifier.padding(4.dp).clickable { onClick(quote) }) {
 
         Row(modifier = Modifier.padding(4.dp)) {
 

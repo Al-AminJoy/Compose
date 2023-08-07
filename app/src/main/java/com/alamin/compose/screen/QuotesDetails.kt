@@ -1,5 +1,6 @@
 package com.alamin.compose.screen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,12 +27,17 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.alamin.compose.CheezyActivity
+import com.alamin.compose.Navigation
 import com.alamin.compose.R
 import com.alamin.compose.model.Quote
-
-@Preview
 @Composable
 fun QuotesDetails(quote: Quote) {
+
+    BackHandler {
+        Navigation.navigatePage(CheezyActivity.PAGE.QUOTES_LIST)
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize(1f)
