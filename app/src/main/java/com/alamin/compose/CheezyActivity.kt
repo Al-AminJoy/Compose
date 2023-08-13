@@ -8,9 +8,11 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 
@@ -27,6 +29,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.math.log
 
 private const val TAG = "CheezyActivity"
 class CheezyActivity : ComponentActivity() {
@@ -52,8 +55,23 @@ class CheezyActivity : ComponentActivity() {
     @Composable
     fun App() {
 
+        var counter = remember {
+            mutableStateOf(0)
+        }
+        
+        var showEffect = counter.value % 4 == 0
+        
+        LaunchedEffect(key1 = showEffect){
+            Log.d(TAG, "App: $showEffect ${counter.value}")
+        }
+        
+        Button(onClick = { 
+            counter.value++
+        }) {
+            Text(text = "Click")
+        }
 
-        if (Navigation.currentState.value == PAGE.QUOTES_LIST){
+        /*if (Navigation.currentState.value == PAGE.QUOTES_LIST){
             if (DataManager.isLoaded.value){
                 QuotesListScreen(data = DataManager.data) {  quote ->
                     currentQuote = quote
@@ -72,7 +90,7 @@ class CheezyActivity : ComponentActivity() {
             }
 
 
-        }
+        }*/
 
 
     }
@@ -80,8 +98,6 @@ class CheezyActivity : ComponentActivity() {
 
 
 
-    enum class PAGE{
-       QUOTES_LIST,QUOTES_DETAILS
-   }
+
 
 }

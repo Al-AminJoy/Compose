@@ -29,13 +29,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.alamin.compose.CheezyActivity
 import com.alamin.compose.Navigation
+import com.alamin.compose.PAGE
 import com.alamin.compose.R
 import com.alamin.compose.model.Quote
 @Composable
 fun QuotesDetails(quote: Quote) {
 
     BackHandler {
-        Navigation.navigatePage(CheezyActivity.PAGE.QUOTES_LIST)
+        Navigation.navigatePage(PAGE.QUOTES_LIST)
     }
 
     Box(
