@@ -4,22 +4,33 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Pending
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.loader.content.Loader
 import com.alamin.compose.model.Quote
 
 import com.alamin.compose.screen.QuotesDetails
@@ -32,6 +43,7 @@ import kotlinx.coroutines.launch
 import kotlin.math.log
 
 private const val TAG = "CheezyActivity"
+
 class CheezyActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,27 +61,13 @@ class CheezyActivity : ComponentActivity() {
     }
 
 
-    private var currentQuote:Quote? = null
+    private var currentQuote: Quote? = null
 
 
     @Composable
     fun App() {
 
-        var counter = remember {
-            mutableStateOf(0)
-        }
-        
-        var showEffect = counter.value % 4 == 0
-        
-        LaunchedEffect(key1 = showEffect){
-            Log.d(TAG, "App: $showEffect ${counter.value}")
-        }
-        
-        Button(onClick = { 
-            counter.value++
-        }) {
-            Text(text = "Click")
-        }
+        Loader()
 
         /*if (Navigation.currentState.value == PAGE.QUOTES_LIST){
             if (DataManager.isLoaded.value){
@@ -95,9 +93,33 @@ class CheezyActivity : ComponentActivity() {
 
     }
 
+    @Composable
+    fun Loader() {
+
+        val degree = produceState(initialValue = 0) {
+            while (true) {
+                delay(10)
+                Log.d(TAG, "Loader: ${(value + 10) % 360}")
+                value = (value + 10) % 360
+            }
+        }
 
 
 
+        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize(1f)) {
+            Column {
+                Image(
+                    imageVector = Icons.Filled.Refresh,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(60.dp)
+                        .rotate(degree.value.toFloat())
+                )
+                Text(text = "Loading")
+
+            }
+        }
+    }
 
 
 }
